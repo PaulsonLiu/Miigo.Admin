@@ -11,6 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Miigo.Admin.Web.Core", "Mii
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Miigo.Admin.Web.Entry", "Miigo.Admin.Web.Entry\Miigo.Admin.Web.Entry.csproj", "{11EA630B-4600-4236-A117-CE6C6CD67586}"
 	ProjectSection(ProjectDependencies) = postProject
+		{3AD1A3ED-ED11-479D-BE32-6589D98A9ADC} = {3AD1A3ED-ED11-479D-BE32-6589D98A9ADC}
 		{C3F5AEC5-ACEE-4109-94E3-3F981DC18268} = {C3F5AEC5-ACEE-4109-94E3-3F981DC18268}
 	EndProjectSection
 EndProject

@@ -121,7 +121,7 @@
       </template>
       <div>
         <el-upload ref="uploadRef" drag :auto-upload="false" :multiple="state.multipleFile" :file-list="state.fileList"
-          action="" :on-change="handleChange" accept="image/*,image/webp">
+          action="" :on-change="handleChange" accept="image/*,image/webp,video/mp4">
           <el-icon class="el-icon--upload">
             <ele-UploadFilled />
           </el-icon>

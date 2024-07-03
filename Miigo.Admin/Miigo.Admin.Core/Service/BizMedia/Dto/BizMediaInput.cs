@@ -151,7 +151,10 @@ public class BizMediaInput : BasePageInput
     /// 热门?
     /// </summary>
     public bool IsHot { get; set; }
-
+    /// <summary>
+    /// 站点id
+    /// </summary>
+    public long SiteId { get; set; }
 }
 
 /// <summary>

@@ -244,6 +244,24 @@ public class BizMediaService : IDynamicApiController, ITransient
     [Authorize(AuthenticationSchemes = SignatureAuthenticationDefaults.SimpleAuthenticationScheme)]
     public async Task<SqlSugarPagedList<BizMediaOutput>> GetList(BizMediaInput input)
     {
+        string ignoreSuffix = string.Empty;
+        //站点控制
+        if(input.SiteId > 0)
+        {
+            var cache = App.GetService<SysCacheService>();
+            var site = cache.Get<SiteMstr>(input.SiteId.ToString());
+            if (site == null)
+            {
+                var siteService = App.GetService<SiteMstrService>();
+                site = siteService.Get(new QueryByIdSiteMstrInput() { Id = input.SiteId }).Result;
+                cache.Set(input.SiteId.ToString(), site, TimeSpan.FromMinutes(20));
+            }
+            if (site != null && site.Status == SiteStatusEnum.Testing)
+            {
+                ignoreSuffix = ".MP4";
+            }
+        }
+
         var query = _rep.AsQueryable()
             .Where(u => !u.IsDelete && u.IsPublish)
             .WhereIF(!string.IsNullOrWhiteSpace(input.SearchKey), u =>
@@ -258,6 +276,7 @@ public class BizMediaService : IDynamicApiController, ITransient
             .WhereIF(!string.IsNullOrWhiteSpace(input.Desc), u => u.Desc.Contains(input.Desc.Trim()))
             .InnerJoin<SysFile>((u, file) => u.FileId == file.Id)
             .WhereIF(!string.IsNullOrWhiteSpace(input.Suffix), (u, file) => input.Suffix.Contains(file.Suffix))
+            .WhereIF(!string.IsNullOrWhiteSpace(ignoreSuffix), (u, file) => !ignoreSuffix.Contains(file.Suffix, StringComparison.OrdinalIgnoreCase))
             //处理外键和TreeSelector相关字段的连接
             //.LeftJoin<BizCatalog>((u, catalog) => u.Catalog == catalog.Id)
             //.LeftJoin<BizAlbum>((u, catalog, album) => u.Album == album.Id)

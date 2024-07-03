@@ -15,6 +15,7 @@ export * from './apis/apijsonapi';
 export * from './apis/biz-album-api';
 export * from './apis/biz-catalog-api';
 export * from './apis/biz-media-api';
+export * from './apis/site-mstr-api';
 export * from './apis/sys-auth-api';
 export * from './apis/sys-cache-api';
 export * from './apis/sys-code-gen-api';
